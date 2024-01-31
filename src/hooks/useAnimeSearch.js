@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
-import { getAmimeGenres, getAnime } from "../services/films";
+import { getAmimeGenres, getAnime, getAmimeById } from "../services/films";
 
 // Hook personalizado para manejar las consultas de anime
 export function useAnimeSearch() {
     const [isLoading, setIsLoading] = useState(true);
     const [anime, setAnime] = useState([]);
+    const [animeData, setAnimeData] = useState()
     const [genres, setGenres] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+
+ // Función para buscar anime por identificador
+    async function fetchAnimeData(id) {
+        try {
+            const data = await getAmimeById(id);
+            setAnimeData(data);
+        } catch (error) {
+            console.error("Error fetching film details:", error);
+        }
+    }
 
     // Función para buscar anime con un término de búsqueda
     async function searchAnime(term) {
@@ -46,12 +57,16 @@ export function useAnimeSearch() {
         searchAnime("");
     }, [currentPage]);
 
+
+
     return {
         isLoading,
         anime,
+        animeData,
         genres,
         currentPage,
         searchAnime,
         changePage,
+        fetchAnimeData,
     };
 }

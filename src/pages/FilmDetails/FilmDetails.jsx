@@ -2,45 +2,34 @@ import { useLoaderData } from "react-router-dom";
 import { getAmimeById } from "../../services/films";
 import { useEffect, useState } from "react";
 import { Trailer } from "../../components/Trailer";
+import { useAnimeSearch } from "../../hooks/useAnimeSearch";
 
 export async function loader({ params }) {
     const id = params.id;
     return { id };
 }
 function FilmDetails() {
-    const [anime, setAnime] = useState();
-
     const { id } = useLoaderData();
-
+    const { animeData, fetchAnimeData } = useAnimeSearch()
     useEffect(() => {
-        async function fetchAnimeData(id) {
-            try {
-                const data = await getAmimeById(id);
-                setAnime(data);
-            } catch (error) {
-                console.error("Error fetching film details:", error);
-            }
-        }
-
         if (id) {
             fetchAnimeData(id);
         }
     }, [id]);
-
     return (
-        <div>
-            {anime && (
+        <div className="">
+            {animeData && (
                 <>
-                    <h1>{anime.title}</h1>
-                    <Trailer title={anime.title} url={anime.trailer.embed_url} />
+                    <h1 className="">{animeData.title}</h1>
                     <div className="flex items-center justify-around">
-                        <img src={anime.images.webp.image_url} alt="" />
-                        <div className="h-20 w-[50vw]">
-                            <p>Episodes: {anime.episodes}</p>
-                            <p>Duration: {anime.duration}</p>
-                            <p>{anime.synopsis}</p>
+                        <img className="film-poster" src={animeData.images.webp.image_url} alt={animeData.title} />
+                        <div className="film-details-info">
+                            <p><strong>Episodes:</strong> {animeData.episodes}</p>
+                            <p><strong>Duration:</strong> {animeData.duration}</p>
+                            <p><strong>Synopsis:</strong> {animeData.synopsis}</p>
                         </div>
-                    </div>
+                    </div>           
+                        <Trailer title={animeData.title} url={animeData.trailer.embed_url} />
                 </>
             )}
         </div>
