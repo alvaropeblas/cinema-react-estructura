@@ -1,10 +1,10 @@
 import { Carousel } from 'flowbite-react';
-import { getTopAmime } from "../services/films";
+import { getAnime } from "../services/films";
 import { useState, useEffect } from 'react';
 
 async function fetchAnime() {
     try {
-        const animeData = await getTopAmime();
+        const animeData = await getAnime('', 1);
         return animeData;
     } catch (error) {
         console.error("Error fetching anime:", error);

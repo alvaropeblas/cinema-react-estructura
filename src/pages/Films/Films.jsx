@@ -1,28 +1,21 @@
 import { useEffect, useState } from "react";
-import { getAllAnimes, getAmimeGenres, getAnimeByName } from "../../services/films";
+import {getAmimeGenres, getAnime } from "../../services/films";
 import { Card, Pagination } from "flowbite-react";
-import ghost from "../../../public/images/ghost.png";
-import { Link, NavLink } from "react-router-dom";
+import loadingImage  from "../../../public/images/ghost.png";
+import { NavLink } from "react-router-dom";
 let timeoutId
 function Films() {
   const [isLoading, setIsLoading] = useState(true)
   const [films, setFilms] = useState([]);
   const [genres, setGenres] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState();
-  const [searchResult, setSearchResult] = useState([]);
-  const [showResults, setShowResults] = useState(false);
 
 
-  async function handleAnimeSearch() {
+
+  async function fetchAnime(e) {
     clearTimeout(timeoutId);
-    const input = document.querySelector('input[type="search"]');
-    const newSearchTerm = input.value;
-    setSearchTerm((search) => newSearchTerm);
     timeoutId = setTimeout(async () => {
-      const search = await getAnimeByName(newSearchTerm);
-      setSearchResult(search);
-      setShowResults(true);
+      const search = await getAnime(e, currentPage);
       setFilms(search)
     }, 300);
   }
@@ -35,14 +28,7 @@ function Films() {
 
 
   const link = { name: "FilmDetails", path: "/filmDetails" }
-  async function fetchAnime() {
-    try {
-      const animeData = await getAllAnimes(currentPage);
-      return animeData;
-    } catch (error) {
-      console.error("Error fetching anime:", error);
-    }
-  }
+
   async function fetchAnimeGenres() {
     try {
       const animeData = await getAmimeGenres();
@@ -58,7 +44,7 @@ function Films() {
         key={1}
         className="max-w-sm animate-pulse"
         imgAlt="cargando"
-        imgSrc={ghost}
+        imgSrc={loadingImage }
       >
       </Card>
     );
@@ -70,7 +56,7 @@ function Films() {
 
   useEffect(() => {
     setIsLoading(true);
-    fetchAnime().then((data) => {
+    fetchAnime("", currentPage).then((data) => {
       setFilms(data);
     }).finally(() => setIsLoading(false));
   }, [currentPage]);
@@ -98,7 +84,7 @@ function Films() {
               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
           </div>
-          <input type="search"  onKeyUp={handleAnimeSearch} id="default-search" className="block w-[350px] p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search animes..." required />
+          <input type="search" onChange={(e) => fetchAnime(e.target.value, currentPage)} id="default-search" className="block w-[350px] p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search animes..." required />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-20 md:grid-cols-2 lg:grid-cols-3 mt-10">
