@@ -10,12 +10,14 @@ function Films() {
     currentPage,
     searchAnime,
     changePage,
+    searchAnimebyGenre,
   } = useAnimeSearch();
   const onPageChange = (page) => changePage(page);
 
   const renderGenreOptions = () => {
     return genres?.map((genre) => (
-      <option key={genre.mal_id} value={genre.mal_id}>
+
+      <option key={genre.mal_id} id={genre.mal_id} value={genre.mal_id}>
         {genre.name}
       </option>
     ));
@@ -42,10 +44,15 @@ function Films() {
       ));
   };
 
+  const handleGenreChange = (e) => {
+    searchAnimebyGenre(e)
+
+  };
+
   return (
     <section className="mt-16 relative">
       <div className="absolute left-[60vw]">
-        <select>
+        <select onChange={(e) => handleGenreChange(e.target.value)}>
           {renderGenreOptions()}
         </select>
       </div>

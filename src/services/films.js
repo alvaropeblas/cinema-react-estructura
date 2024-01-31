@@ -1,6 +1,7 @@
 
 const ANIME_BY_ID = 'https://api.jikan.moe/v4/anime/'
 const ANIME_GENRES = 'https://api.jikan.moe/v4/genres/anime'
+const ANIME_BY_GENRE = 'https://api.jikan.moe/v4/anime?genres='
 
 export async function getAnime(animeName, page) {
     const allAnime = [];
@@ -50,3 +51,19 @@ export async function getAmimeGenres() {
         throw error;
     }
 };
+
+export async function getAmimeByGenre(genreId) {
+    try {
+        const response = await fetch(ANIME_BY_GENRE + genreId);
+        if (!response.ok) {
+            throw new Error('Hubo un problema con la solicitud');
+        }
+
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+        throw error;
+    }
+};
+
