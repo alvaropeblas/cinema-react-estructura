@@ -1,28 +1,14 @@
 import { Carousel } from 'flowbite-react';
-import { getAnime } from "../services/films";
-import { useState, useEffect } from 'react';
+import { useAnimeSearch } from '../hooks/useAnimeSearch';
 
-async function fetchAnime() {
-    try {
-        const animeData = await getAnime('', 1);
-        return animeData;
-    } catch (error) {
-        console.error("Error fetching anime:", error);
-        return [];
-    }
-}
+
 function SkeletonImage() {
     return (
         <div className="w-[150px] h-[600px] bg-gray-300 rounded animate-pulse"></div>
     );
 }
-function CaourselComponent() {
-    const [anime, setAnime] = useState([]);
-
-    useEffect(() => {
-        fetchAnime().then((data) => setAnime(data));
-    }, []);
-
+function CarourselComponent() {
+    const { anime } = useAnimeSearch();
     return (
         <section className='flex w-[40%] h-[600px] m-10 ml-[30%]'>
             {anime.length > 0 ? (
@@ -45,4 +31,4 @@ function CaourselComponent() {
     );
 }
 
-export default CaourselComponent;
+export default CarourselComponent;

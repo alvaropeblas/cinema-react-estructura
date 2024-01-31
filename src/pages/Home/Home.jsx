@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import CaourselComponent from "../../components/CaourselComponent";
+import CarourselComponent from "../../components/CarourselComponent";
 
 function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [films, setFilms] = useState([]);
-
   return (
     <>
       <section
@@ -40,7 +37,7 @@ function Home() {
 
       <section>
         <h1 className='font-rubiksh text-3xl text-gray-200 font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl'>Top Animes</h1>
-          <CaourselComponent  />
+          <CarourselComponent  />
       </section>
 
     </>
