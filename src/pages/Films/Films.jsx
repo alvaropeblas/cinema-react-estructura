@@ -16,8 +16,7 @@ function Films() {
 
   const renderGenreOptions = () => {
     return genres?.map((genre) => (
-
-      <option key={genre.mal_id} id={genre.mal_id} value={genre.mal_id}>
+      <option key={genre.mal_id} id={genre.mal_id} value={genre.mal_id} className="text-black">
         {genre.name}
       </option>
     ));
@@ -31,7 +30,7 @@ function Films() {
       : anime?.map((film) => (
         <Card
           key={film.mal_id}
-          className="max-w-sm"
+          className="max-w-sm font-quicksand"
           imgAlt={film.title}
           imgSrc={film.images.jpg.image_url}
         >
@@ -46,13 +45,12 @@ function Films() {
 
   const handleGenreChange = (e) => {
     searchAnimebyGenre(e)
-
   };
 
   return (
     <section className="mt-16 relative">
       <div className="absolute left-[60vw]">
-        <select onChange={(e) => handleGenreChange(e.target.value)}>
+        <select className="w-[300px] p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" onChange={(e) => handleGenreChange(e.target.value)}>
           {renderGenreOptions()}
         </select>
       </div>
@@ -80,13 +78,9 @@ function Films() {
       <h1 className="font-rubiksh text-gray-200 font-extrabold text-4xl mb-4">
         Animes en cartelera
       </h1>
-
-
-
       <div className="grid grid-cols-1 gap-20 md:grid-cols-2 lg:grid-cols-3 mt-10">
         {renderFilmCards()}
       </div>
-
       <div className="flex overflow-x-auto sm:justify-center">
         <Pagination
           currentPage={currentPage}

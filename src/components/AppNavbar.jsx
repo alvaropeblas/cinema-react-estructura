@@ -2,7 +2,7 @@ import { NavLink, Link } from "react-router-dom";
 import ghost from "../../public/images/ghost.png";
 const links = [
     { name: "Home", path: "/" },
-    { name: "Films", path: "/films" },
+    { name: "Anime", path: "/films" },
 ]
 const activeLinkClass = 'block py-2 px-3 text-primary-500 rounded md:p-0'
 const linkClass = 'block py-2 px-3 text-white rounded hover:text-primary-600 md:p-0'
@@ -16,7 +16,7 @@ function AppNavbar() {
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={ghost} className="h-8" alt="Web Logo" />
-                    <span className="self-center text-2xl font-semibold text-gray-200 whitespace-nowrap">AnimaGo</span>
+                    <span className="self-center text-2xl font-rubiksh font-semibold text-gray-200 whitespace-nowrap">AnimaGo</span>
                 </Link>
                 <button data-collapse-toggle="navbar-default" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-primary-200 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-default" aria-expanded="false">
                     <span className="sr-only">Open main menu</span>

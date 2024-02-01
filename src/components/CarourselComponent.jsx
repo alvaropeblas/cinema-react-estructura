@@ -13,7 +13,7 @@ function CarouselComponent() {
 
     return (
         <section className="flex items-center justify-center w-full h-[700px] m-10">
-            {anime.length > 0 ? (
+            {anime?.length > 0 ? (
                 <Carousel
                     slideInterval={1700}
                     className="w-[70%] h-[100%] overflow-hidden rounded-md shadow-md"
@@ -23,7 +23,7 @@ function CarouselComponent() {
                             key={animeItem.mal_id}
                             src={animeItem.images.webp.large_image_url}
                             alt={animeItem.title}
-                            className="w-full h-[100%] object-cover rounded-md"
+                            className="w-full h-[100%] rounded-md"
                         />
                     ))}
                 </Carousel>
