@@ -20,7 +20,7 @@ function FilmDetails() {
         <div className="">
             {animeData && (
                 <>
-                    <div className="flex items-center justify-around mt-16">
+                    <div className="flex items-center justify-around mt-16 ">
                         <img className="w-[20vw]" src={animeData.images.webp.image_url} alt={animeData.title} />
                         <div className="w-[35vw] flex-col items-center justify-center">
                             <h1 className="uppercase text-4xl font-rubiksh">{animeData.title}</h1>
@@ -35,9 +35,13 @@ function FilmDetails() {
                             </div>
                         </div>
                     </div>
-                    <div className="w-[80%] h-[400px]  flex justify-between items-center">
-                        <h1 className="uppercase text-4xl font-rubiksh">Trailer</h1>
-                        <Trailer title={animeData.title} url={animeData.trailer.embed_url} />
+                    <div className="divide-y divide-solid">
+                        <h1 className="uppercase text-4xl font-rubiksh m-12 ">Trailer</h1>
+                    </div>
+                    <div className="ml-[25%]">
+                        <div >
+                            <Trailer title={animeData.title} url={animeData.trailer.embed_url} />
+                        </div>
                     </div>
                 </>
             )}
