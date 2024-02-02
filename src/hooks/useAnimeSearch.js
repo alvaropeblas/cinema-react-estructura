@@ -8,6 +8,7 @@ export function useAnimeSearch() {
     const [animeData, setAnimeData] = useState()
     const [genres, setGenres] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isFavourite, setIsFavourite] = useState(false)
 
     // Función para buscar anime por identificador
     async function fetchAnimeData(id) {
