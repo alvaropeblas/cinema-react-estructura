@@ -19,7 +19,7 @@ function Home() {
           <div className="space-x-4">
             <Link
               className="inline-flex h-9 items-center justify-center rounded-md bg-primary-200 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-primary-200/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 "
-              to="/films"
+              to="/animago/films"
             >
               Reserva tu entrada ahora
             </Link>

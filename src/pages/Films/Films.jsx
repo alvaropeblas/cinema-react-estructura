@@ -34,7 +34,7 @@ function Films() {
           imgAlt={film.title}
           imgSrc={film.images.jpg.image_url}
         >
-          <NavLink key={film.mal_id} to={`/filmDetails/${film.mal_id}`}>
+          <NavLink key={film.mal_id} to={`/animago/filmDetails/${film.mal_id}`}>
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {film.title}
             </h5>

@@ -1,20 +1,20 @@
 import { NavLink, Link } from "react-router-dom";
 import ghost from "../../public/images/ghost.png";
 const links = [
-    { name: "Home", path: "/" },
-    { name: "Anime", path: "/films" },
+    { name: "Home", path: "/animago" },
+    { name: "Anime", path: "/animago/films" },
 ]
 const activeLinkClass = 'block py-2 px-3 text-primary-500 rounded md:p-0'
 const linkClass = 'block py-2 px-3 text-white rounded hover:text-primary-600 md:p-0'
 
 let timeoutId
 function AppNavbar() {
-    
+
 
     return (
         <nav className="bg-darksurf-200 rounded-md mb-2">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Link to="/animago" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src={ghost} className="h-8" alt="Web Logo" />
                     <span className="self-center text-2xl font-rubiksh font-semibold text-gray-200 whitespace-nowrap">AnimaGo</span>
                 </Link>
@@ -38,7 +38,7 @@ function AppNavbar() {
                             ))
                         }
                     </ul>
-                </div>  
+                </div>
             </div>
         </nav >
     );

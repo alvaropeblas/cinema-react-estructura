@@ -32,15 +32,15 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <ErrorPage />,
     children: [{
-      path: "/",
+      path: "/animago",
       element: <Home />,
     },
     {
-      path: "/films",
+      path: "/animago/films",
       element: <Films />,
     },
     {
-      path: "/filmDetails/:id",
+      path: "/animago/filmDetails/:id",
       element: <FilmDetails />,
       loader: filmDetailsLoader
     }]
