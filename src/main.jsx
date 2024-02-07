@@ -14,6 +14,8 @@ import AppNavbar from './components/AppNavbar.jsx'
 import AppFooter from "./components/AppFooter.jsx";
 import FilmDetails from './pages/FilmDetails/FilmDetails.jsx';
 import { loader as filmDetailsLoader } from './pages/FilmDetails/FilmDetails.jsx';
+import store from './app/store.js';
+import { Provider } from 'react-redux';
 
 
 //en outlet se redenrizan los diferentes componentes (páginas)
@@ -21,9 +23,11 @@ import { loader as filmDetailsLoader } from './pages/FilmDetails/FilmDetails.jsx
 // https://stackoverflow.com/questions/75785717/i-am-using-createbrowserrouter-what-is-the-proper-way-to-have-header-and-footer
 function AppLayout() {
   return <>
-    <AppNavbar />
-    <Outlet />
-    <AppFooter />
+    <Provider store={store}>
+      <AppNavbar />
+      <Outlet />
+      <AppFooter />
+    </Provider>
   </>
 }
 
