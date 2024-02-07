@@ -1,5 +1,6 @@
 import { Button, Datepicker, Label, Modal, Select, TextInput } from 'flowbite-react';
 import { useState } from 'react';
+import { useEntradas } from '../../hooks/useEntradas';
 
 export function BookingModal({ name }) {
     const [openModal, setOpenModal] = useState(false);
@@ -8,6 +9,8 @@ export function BookingModal({ name }) {
     const [date, setDate] = useState(Date.now());
     const [hour, setHour] = useState("10:00");
     const [seat, setSeat] = useState(1);
+    const [precio, setPrecio] = useState(9.99)
+    const { useGuardarEntradas } = useEntradas()
 
     function handleCompra(nombre, email) {
         const data = {
@@ -16,9 +19,16 @@ export function BookingModal({ name }) {
             anime: name,
             date: date,
             hour: hour,
-            seat: seat
+            seat: seat,
+            precio: precio,
         }
-        console.log(data)
+        setOpenModal(false)
+
+        useGuardarEntradas(data)
+    }
+    function handleSeatChange(e) {
+        setSeat(e)
+        setPrecio(9.99 * e)
     }
     return (
         <>
@@ -52,7 +62,7 @@ export function BookingModal({ name }) {
                                 <Label value="Hora" />
                             </div>
                             <div className='flex items-center justify-around'>
-                                <Select id="asientos" className='w-[47%]' onChange={(e) => setSeat(e.target.value)} required>
+                                <Select id="asientos" className='w-[47%]' onChange={(e) => handleSeatChange(e.target.value)} required>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -72,7 +82,7 @@ export function BookingModal({ name }) {
                                 <Button color='failure' onClick={() => setOpenModal(false)}><p className='text-white'>Cancelar</p></Button>
                             </div>
                             <p className="text-cyan-700 mt-2">
-                                <strong className='text-cyan-700'>Precio: 9.99 €</strong>
+                                <strong className='text-cyan-700'>Precio: {precio} €</strong>
                             </p>
                         </div>
                         <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">

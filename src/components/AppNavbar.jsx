@@ -3,6 +3,7 @@ import ghost from "../../public/images/ghost.png";
 const links = [
     { name: "Home", path: "/animago" },
     { name: "Anime", path: "/animago/films" },
+    { name: "Entradas", path: "/animago/entradas" },
 ]
 const activeLinkClass = 'block py-2 px-3 text-primary-500 rounded md:p-0'
 const linkClass = 'block py-2 px-3 text-white rounded hover:text-primary-600 md:p-0'

@@ -16,11 +16,7 @@ import FilmDetails from './pages/FilmDetails/FilmDetails.jsx';
 import { loader as filmDetailsLoader } from './pages/FilmDetails/FilmDetails.jsx';
 import store from './app/store.js';
 import { Provider } from 'react-redux';
-
-
-//en outlet se redenrizan los diferentes componentes (páginas)
-
-// https://stackoverflow.com/questions/75785717/i-am-using-createbrowserrouter-what-is-the-proper-way-to-have-header-and-footer
+import Entradas from './pages/Entradas/Entradas.jsx';
 function AppLayout() {
   return <>
     <Provider store={store}>
@@ -47,6 +43,10 @@ const router = createBrowserRouter([
       path: "/animago/filmDetails/:id",
       element: <FilmDetails />,
       loader: filmDetailsLoader
+    },
+    {
+      path: "/animago/entradas",
+      element: <Entradas />,
     }]
   }
 ]);
