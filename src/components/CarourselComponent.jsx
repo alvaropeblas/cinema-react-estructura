@@ -2,9 +2,14 @@ import { Carousel } from 'flowbite-react';
 import { useAnimeSearch } from '../hooks/useAnimeSearch';
 import { SkeletonFilms } from './skeletons/SkeletonFilms';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 function CarouselComponent() {
-    const { animes } = useSelector(state => state.animes);
+    const { animes, page } = useSelector(state => state.animes);
+    const { searchAnimeThunk } = useAnimeSearch()
+    useEffect(() => {
+        searchAnimeThunk
+    })
 
     return (
         <section className="flex items-center justify-center w-full h-[700px] m-10 mt-10">
