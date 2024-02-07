@@ -1,37 +1,39 @@
-import { useLoaderData } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { Trailer } from "../../components/Trailer";
-import { useAnimeSearch } from "../../hooks/useAnimeSearch";
 import { BookingModal } from "../../components/modal/BookingModal";
+import { useSelector } from "react-redux";
+import { useAnimeSearch } from "../../hooks/useAnimeSearch";
 
 export async function loader({ params }) {
     const id = params.id;
     return { id };
 }
 function FilmDetails() {
-    const { id } = useLoaderData();
-    const { animeData, fetchAnimeData } = useAnimeSearch()
+    const { id } = useParams();
+    const {
+        searchAnimeByIdThunk,
+    } = useAnimeSearch();
+    const { currentAnime } = useSelector(state => state.animes)
     useEffect(() => {
-        if (id) {
-            fetchAnimeData(id);
-        }
-    }, [id]);
+        searchAnimeByIdThunk(id);
+    }, []);
     return (
         <div className="">
-            {animeData && (
+            {currentAnime && (
                 <>
                     <div className="flex items-center justify-around mt-16 ">
-                        <img className="w-[20vw]" src={animeData.images.webp.image_url} alt={animeData.title} />
+                        <img className="w-[20vw]" src={currentAnime.images.webp.image_url} alt={currentAnime.title} />
                         <div className="w-[35vw] flex-col items-center justify-center">
-                            <h1 className="uppercase text-4xl font-rubiksh">{animeData.title}</h1>
+                            <h1 className="uppercase text-4xl font-rubiksh">{currentAnime.title}</h1>
                             <br />
-                            <p><strong className="font-quicksand">Episodes:</strong> {animeData.episodes}</p>
-                            <p><strong className="font-quicksand">Duration:</strong> {animeData.duration}</p>
+                            <p><strong className="font-quicksand">Episodes:</strong> {currentAnime.episodes}</p>
+                            <p><strong className="font-quicksand">Duration:</strong> {currentAnime.duration}</p>
                             <br />
-                            <p className="font-quicksand"><strong className="font-quicksand">Synopsis:</strong> {animeData.synopsis}</p>
+                            <p className="font-quicksand"><strong className="font-quicksand">Synopsis:</strong> {currentAnime.synopsis}</p>
                             <br />
                             <div className="ml-[40%]">
-                                <BookingModal name={animeData.title} />
+                                <BookingModal name={currentAnime.title} />
                             </div>
                         </div>
                     </div>
@@ -40,7 +42,7 @@ function FilmDetails() {
                     </div>
                     <div className="ml-[25%]">
                         <div >
-                            <Trailer title={animeData.title} url={animeData.trailer.embed_url} />
+                            <Trailer title={currentAnime.title} url={currentAnime.trailer.embed_url} />
                         </div>
                     </div>
                 </>

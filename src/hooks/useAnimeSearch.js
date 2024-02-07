@@ -1,86 +1,43 @@
-import { useEffect, useState } from "react";
-import { getAmimeGenres, getAnime, getAmimeById, getAmimeByGenre } from "../services/films";
-
-// Hook personalizado para manejar las consultas de anime
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../features/animes/animeSlice";
+import { searchAnime, searchAnimeByGenre, searchAnimeById, searchAnimeByInput } from "../features/animes/animesThunk";
+import { searchGenres } from "../features/genres/genresThunk";
 export function useAnimeSearch() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [anime, setAnime] = useState([]);
-    const [animeData, setAnimeData] = useState()
-    const [genres, setGenres] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [isFavourite, setIsFavourite] = useState(false)
-
-    // Función para buscar anime por identificador
-    async function fetchAnimeData(id) {
-        try {
-            const data = await getAmimeById(id);
-            setAnimeData(data);
-        } catch (error) {
-            console.error("Error fetching film details:", error);
-        }
+    const dispatch = useDispatch();
+    const { animes, isLoading, page, currentAnime } = useSelector(state => state.animes);
+    const { genres } = useSelector(state => state.genres);
+    const searchAnimeThunk = () => dispatch(searchAnime("", page));
+    const searchGenresThunk = () => dispatch(searchGenres());
+    const searchAnimeByGenreThunk = (genreId) => dispatch(searchAnimeByGenre(genreId))
+    const searchAnimeByIdThunk = (animeId) => {
+        dispatch(searchAnimeById(animeId))
     }
+    const searchAnimeByInputThunk = (animeText, page) => dispatch(searchAnimeByInput(animeText, page))
 
-    // Función para buscar anime con un término de búsqueda
-    async function searchAnime(term) {
-        setIsLoading(true);
-        try {
-            const searchResult = await getAnime(term, currentPage);
-            setAnime(searchResult);
-        } catch (error) {
-            console.error("Error fetching anime:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-    async function searchAnimebyGenre(genreId) {
-        setIsLoading(true);
-        try {
-            const searchResult = await getAmimeByGenre(genreId);
-            setAnime(searchResult);
-        } catch (error) {
-            console.error("Error fetching anime:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    }
 
-    // Función para obtener los géneros de anime
-    async function fetchAnimeGenres() {
-        try {
-            const animeGenres = await getAmimeGenres();
-            setGenres(animeGenres);
-        } catch (error) {
-            console.error("Error fetching anime genres:", error);
-        }
-    }
-
-    // Función para cambiar la página actual
-    function changePage(page) {
-        setCurrentPage(page);
-    }
-
-    // Efecto para cargar los géneros cuando se monta el componente
     useEffect(() => {
-        fetchAnimeGenres();
+        searchAnimeThunk();
+    }, [page]);
+
+    useEffect(() => {
+        searchGenresThunk();
     }, []);
 
-    // Efecto para buscar anime cuando cambia la página actual
-    useEffect(() => {
-        searchAnime("");
-    }, [currentPage]);
-
-
+    function changePage(newPage) {
+        dispatch(setCurrentPage(newPage));
+        dispatch(searchAnime("", newPage));
+    }
 
     return {
-        isLoading,
-        anime,
-        animeData,
+        currentAnime,
+        animes,
         genres,
-        currentPage,
-        searchAnime,
+        isLoading,
+        searchAnimeThunk,
         changePage,
-        fetchAnimeData,
-        searchAnimebyGenre,
-        fetchAnimeGenres,
+        searchAnimeByGenreThunk,
+        searchAnimeByIdThunk,
+        searchAnimeByInputThunk,
     };
 }

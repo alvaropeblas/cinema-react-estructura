@@ -2,18 +2,20 @@ import { Card, Pagination } from "flowbite-react";
 import { NavLink } from "react-router-dom";
 import { useAnimeSearch } from "../../hooks/useAnimeSearch";
 import { SkeletonFilms } from "../../components/skeletons/SkeletonFilms";
+import { useSelector } from "react-redux";
+
 function Films() {
   const {
-    isLoading,
-    anime,
     genres,
-    currentPage,
-    searchAnime,
     changePage,
-    searchAnimebyGenre,
+    searchAnimeByGenreThunk,
+    searchAnimeByInputThunk,
   } = useAnimeSearch();
-  const onPageChange = (page) => changePage(page);
 
+  const { animes, isLoading, page } = useSelector(state => state.animes)
+  const onPageChangeHandler = (newPage) => {
+    changePage(newPage);
+  };
   const renderGenreOptions = () => {
     return genres?.map((genre) => (
       <option key={genre.mal_id} id={genre.mal_id} value={genre.mal_id} className="text-black">
@@ -27,24 +29,25 @@ function Films() {
       ? Array.from({ length: 10 }).map((_, index) => (
         <SkeletonFilms key={index} />
       ))
-      : anime?.map((film) => (
-        <Card
-          key={film.mal_id}
-          className="max-w-sm font-quicksand"
-          imgAlt={film.title}
-          imgSrc={film.images.jpg.image_url}
-        >
-          <NavLink key={film.mal_id} to={`/animago/filmDetails/${film.mal_id}`}>
+      : animes?.map((film) => (
+        <NavLink key={film.mal_id} to={`/animago/filmDetails/${film.mal_id}`}>
+          <Card
+            key={film.mal_id}
+            className="max-w-sm font-quicksand"
+            imgAlt={film.title}
+            imgSrc={film.images.jpg.image_url}
+          >
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {film.title}
             </h5>
-          </NavLink>
-        </Card>
+          </Card >
+        </NavLink>
       ));
   };
 
+
   const handleGenreChange = (e) => {
-    searchAnimebyGenre(e)
+    searchAnimeByGenreThunk(e)
   };
 
   return (
@@ -68,7 +71,7 @@ function Films() {
             </div>
             <input
               type="search"
-              onChange={(e) => searchAnime(e.target.value, currentPage)}
+              onChange={(e) => searchAnimeByInputThunk(e.target.value, page)}
               id="default-search"
               className=" w-[350px] p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search animes..."
@@ -83,9 +86,9 @@ function Films() {
       </div>
       <div className="flex overflow-x-auto sm:justify-center">
         <Pagination
-          currentPage={currentPage}
+          currentPage={page}
           totalPages={5}
-          onPageChange={onPageChange}
+          onPageChange={onPageChangeHandler}
           showIcons
         />
       </div>

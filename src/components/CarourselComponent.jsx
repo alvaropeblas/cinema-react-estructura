@@ -1,18 +1,19 @@
 import { Carousel } from 'flowbite-react';
 import { useAnimeSearch } from '../hooks/useAnimeSearch';
 import { SkeletonFilms } from './skeletons/SkeletonFilms';
+import { useSelector } from 'react-redux';
 
 function CarouselComponent() {
-    const { anime } = useAnimeSearch();
+    const { animes } = useSelector(state => state.animes);
 
     return (
         <section className="flex items-center justify-center w-full h-[700px] m-10 mt-10">
-            {anime?.length > 0 ? (
+            {animes?.length > 0 ? (
                 <Carousel
                     slideInterval={1700}
                     className="w-[70%] h-[100%] overflow-hidden rounded-md shadow-md"
                 >
-                    {anime.map((animeItem) => (
+                    {animes.map((animeItem) => (
                         <img
                             key={animeItem.mal_id}
                             src={animeItem.images.webp.large_image_url}
