@@ -17,6 +17,7 @@ import { loader as filmDetailsLoader } from './pages/FilmDetails/FilmDetails.jsx
 import store from './app/store.js';
 import { Provider } from 'react-redux';
 import Entradas from './pages/Entradas/Entradas.jsx';
+import Favoritos from './pages/Favoritos/Favoritos.jsx';
 function AppLayout() {
   return <>
     <Provider store={store}>
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
     {
       path: "/animago/entradas",
       element: <Entradas />,
+    },
+    {
+      path: "/animago/favoritos",
+      element: <Favoritos />,
     }]
   }
 ]);

@@ -8,11 +8,10 @@ export const entradasSlice = createSlice({
     reducers: {
 
         setEntradas: (state, action) => {
-            console.log(action.payload);
             state.entradas.push(action.payload)
         },
         getEntradas: (state) => {
-            return state.entradas;
+            return state.entradas.length;
         }
     },
 })

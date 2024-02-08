@@ -7,6 +7,7 @@ export const filmsSlice = createSlice({
         animes: [],
         currentAnime: null,
         isLoading: false,
+        isFavorita: [],
     },
     reducers: {
         startLoadingAnimes: (state) => {
@@ -22,9 +23,10 @@ export const filmsSlice = createSlice({
         setCurrentAnime: (state, action) => {
             state.currentAnime = action.payload.currentAnime;
             state.isLoading = false;
+        },
+        setFavorita: (state, action) => {
+            state.isFavorita = action.payload.mal_id;
         }
-
-
     },
 })
 

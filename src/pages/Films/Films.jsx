@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useAnimeSearch } from "../../hooks/useAnimeSearch";
 import { SkeletonFilms } from "../../components/skeletons/SkeletonFilms";
 import { useSelector } from "react-redux";
+import FavStar from "../../components/FavStar";
 
 function Films() {
   const {
@@ -40,6 +41,7 @@ function Films() {
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {film.title}
             </h5>
+            <FavStar />
           </Card >
         </NavLink>
       ));

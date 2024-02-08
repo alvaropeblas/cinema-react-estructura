@@ -2,7 +2,7 @@ import { Button, Datepicker, Label, Modal, Select, TextInput } from 'flowbite-re
 import { useState } from 'react';
 import { useEntradas } from '../../hooks/useEntradas';
 
-export function BookingModal({ name }) {
+export function BookingModal({ name, imagen }) {
     const [openModal, setOpenModal] = useState(false);
     const [email, setEmail] = useState();
     const [nombre, setNombre] = useState();
@@ -21,6 +21,7 @@ export function BookingModal({ name }) {
             hour: hour,
             seat: seat,
             precio: precio,
+            imagen: imagen,
         }
         setOpenModal(false)
 

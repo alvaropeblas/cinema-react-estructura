@@ -1,17 +1,21 @@
 import { NavLink, Link } from "react-router-dom";
 import ghost from "../../public/images/ghost.png";
-const links = [
-    { name: "Home", path: "/animago" },
-    { name: "Anime", path: "/animago/films" },
-    { name: "Entradas", path: "/animago/entradas" },
-]
+import { useSelector } from "react-redux";
+import { getEntradas } from "../features/entradas/entradasSlice";
+
+
 const activeLinkClass = 'block py-2 px-3 text-primary-500 rounded md:p-0'
 const linkClass = 'block py-2 px-3 text-white rounded hover:text-primary-600 md:p-0'
 
-let timeoutId
 function AppNavbar() {
+    const entradas = useSelector(state => state.entradas.entradas); // Obtén la matriz de entradas desde el estado Redux
 
-
+    const links = [
+        { name: "Home", path: "/animago" },
+        { name: "Anime", path: "/animago/films" },
+        { name: `Entradas ${entradas.length}`, path: "/animago/entradas" },
+        { name: 'Favoritos', path: '/animago/favoritos' }
+    ]
     return (
         <nav className="bg-darksurf-200 rounded-md mb-2">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
