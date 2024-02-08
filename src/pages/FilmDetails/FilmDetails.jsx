@@ -5,14 +5,12 @@ import { BookingModal } from "../../components/modal/BookingModal";
 import { useSelector } from "react-redux";
 import { useAnimeSearch } from "../../hooks/useAnimeSearch";
 import { Button } from "flowbite-react";
-import { useFavorito } from '../../hooks/useFavorito'
 
 export async function loader({ params }) {
     const id = params.id;
     return { id };
 }
 function FilmDetails() {
-    const { guardarFavorito } = useFavorito()
     const [isFavo, setIsFavo] = useState(false)
     const { id } = useParams();
     const {
